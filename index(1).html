@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090a0a" />
+  <title>VC Studio — Ideas Built</title>
+  <meta name="description" content="VC Studio builds robotics, websites, apps, games, school projects and digital solutions." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+    :root{
+      --bg:#090a0a; --panel:#101212; --panel2:#151818; --text:#f5f5f2;
+      --muted:#9a9d9c; --line:rgba(255,255,255,.11); --accent:#a8ffea;
+      --light:#f4f4f1; --dark:#0b0c0c; --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-weight:400}
+    a{text-decoration:none;color:inherit}
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    .hidden{display:none!important}
+
+    /* NAV */
+    .nav{position:fixed;z-index:100;top:16px;left:16px;right:16px;height:58px;display:flex;align-items:center;justify-content:space-between;padding:8px 10px 8px 16px;border:1px solid var(--line);background:rgba(12,13,13,.72);backdrop-filter:blur(18px);border-radius:999px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.04em}
+    .logo{width:25px;height:25px;position:relative;display:block}
+    .logo i{position:absolute;width:11px;height:24px;border-radius:8px;background:#fff;transform:rotate(-35deg);top:1px}
+    .logo i:last-child{left:9px;top:0}
+    .navlinks{display:flex;gap:4px;align-items:center}
+    .navlinks a,.nav-cta{font-size:11px;padding:11px 13px;border-radius:999px;color:#c7cac9}
+    .navlinks a:hover{background:#1a1d1d;color:#fff}
+    .nav-cta{background:#fff;color:#080909;font-weight:600;border:0}
+    .menu-btn{display:none;background:#fff;color:#080909;border:0;border-radius:999px;padding:11px 14px;font-size:11px;font-weight:600}
+    .wa-dot{width:27px;height:27px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#090a0a;font-size:11px;margin-left:5px}
+
+    /* HERO */
+    .hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:150px 6vw 70px}
+    .hero-grid{position:absolute;inset:0;background:
+      radial-gradient(circle at 50% 45%,rgba(255,255,255,.09),transparent 27%),
+      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:auto,70px 70px,70px 70px;
+      mask-image:linear-gradient(to bottom,transparent 0%,black 20%,black 75%,transparent 100%);
+    }
+    .orb{position:absolute;width:min(44vw,520px);height:min(44vw,520px);left:50%;top:46%;transform:translate(-50%,-50%);border-radius:50%;
+      background:radial-gradient(circle at 34% 28%,#fff 0 1%,#cbd0ce 3%,#353a39 13%,#111414 44%,#060707 72%);
+      box-shadow:0 0 80px rgba(255,255,255,.08),inset -35px -35px 70px #000;
+      animation:float 7s ease-in-out infinite;
+    }
+    .orb:before,.orb:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.2);border-radius:50%;inset:10%;transform:rotate(25deg) scaleX(.42)}
+    .orb:after{inset:17%;transform:rotate(-35deg) scaleX(.25);border-color:rgba(168,255,234,.28)}
+    .scan{position:absolute;left:50%;top:46%;width:min(55vw,650px);height:1px;background:linear-gradient(90deg,transparent,rgba(168,255,234,.55),transparent);transform:translate(-50%,-50%);box-shadow:0 0 15px rgba(168,255,234,.25)}
+    @keyframes float{50%{transform:translate(-50%,-54%) rotate(3deg)}}
+    .hero-copy{position:relative;z-index:2;max-width:920px}
+    .eyebrow{display:flex;align-items:center;gap:8px;color:#a8ffea;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px}
+    .eyebrow span{width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px var(--accent)}
+    h1{font-size:clamp(3.3rem,8.5vw,8.5rem);font-weight:300;line-height:.88;letter-spacing:-.065em;margin:0 0 28px;max-width:1000px}
+    .hero-desc{max-width:580px;color:#b8bcba;font-size:14px;line-height:1.7}
+    .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:25px}
+    .btn{border:1px solid var(--line);background:transparent;color:#fff;border-radius:999px;padding:13px 18px;font-size:11px;transition:.25s}
+    .btn:hover{transform:translateY(-2px);border-color:#555}
+    .btn.primary{background:#fff;color:#080909;border-color:#fff;font-weight:600}
+    .hero-tags{position:absolute;right:6vw;bottom:72px;z-index:3;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .tag{border:1px solid var(--line);background:rgba(255,255,255,.045);padding:8px 11px;border-radius:999px;font-size:10px;color:#bfc2c0}
+
+    /* SECTIONS */
+    section{position:relative;padding:110px 6vw;border-top:1px solid var(--line)}
+    .section-kicker{color:#8c918f;font-size:10px;text-transform:uppercase;letter-spacing:.13em;margin-bottom:15px}
+    .section-title{font-weight:300;font-size:clamp(2.5rem,5.5vw,6rem);letter-spacing:-.055em;line-height:.92;margin:0;max-width:900px}
+    .section-intro{max-width:600px;color:#8e9492;font-size:13px;line-height:1.7;margin:20px 0 0}
+
+    .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:60px}
+    .service{min-height:330px;padding:25px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#111414,#0c0d0d);position:relative;overflow:hidden;transition:.35s}
+    .service:hover{transform:translateY(-6px);border-color:rgba(168,255,234,.35)}
+    .service-no{font-size:10px;color:#6d7371}
+    .service-visual{height:130px;display:flex;align-items:center;justify-content:center;perspective:500px}
+    .cube{width:85px;height:85px;border:1px solid rgba(255,255,255,.3);transform:rotateX(55deg) rotateZ(45deg);box-shadow:inset 0 0 35px rgba(255,255,255,.04),0 20px 45px rgba(0,0,0,.4)}
+    .service h3{font-weight:400;font-size:22px;letter-spacing:-.04em;margin:0 0 8px}
+    .service p{color:#858b89;font-size:11px;line-height:1.6;max-width:300px}
+    .service .arrow{position:absolute;right:20px;bottom:20px;font-size:18px}
+
+    /* PROJECTS */
+    .project-toolbar{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-top:45px}
+    .filters{display:flex;gap:5px;flex-wrap:wrap}
+    .filter{border:1px solid var(--line);background:transparent;color:#8f9593;padding:9px 12px;border-radius:999px;font-size:10px}
+    .filter.active{background:#fff;color:#090a0a;border-color:#fff}
+    .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .project{border:1px solid var(--line);background:#0e1010;border-radius:18px;overflow:hidden;min-height:310px;display:flex;flex-direction:column;transition:.3s}
+    .project:hover{transform:translateY(-5px)}
+    .project-img{height:175px;background:radial-gradient(circle at 50% 40%,#34403e,#111414 45%,#080909);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .project-img:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 40%,rgba(168,255,234,.08),transparent 65%);transform:translateX(-100%);transition:.6s}
+    .project:hover .project-img:after{transform:translateX(100%)}
+    .project-shape{width:90px;height:90px;border-radius:24px;border:1px solid rgba(255,255,255,.25);transform:rotate(25deg);box-shadow:0 0 50px rgba(168,255,234,.06)}
+    .project-body{padding:18px;display:flex;flex-direction:column;flex:1}
+    .project-meta{display:flex;justify-content:space-between;color:#747b78;font-size:9px;text-transform:uppercase;letter-spacing:.08em}
+    .status{color:#a8ffea}
+    .project h3{font-size:18px;font-weight:400;margin:10px 0 7px;letter-spacing:-.03em}
+    .project p{font-size:10px;color:#808784;line-height:1.6;margin:0}
+    .project-foot{margin-top:auto;padding-top:15px;display:flex;justify-content:space-between;align-items:center;color:#aeb2b0;font-size:10px}
+
+    /* BUSINESS */
+    .business-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:10px;margin-top:55px}
+    .business-main,.business-card{border:1px solid var(--line);border-radius:20px;background:#101212;padding:30px;min-height:330px}
+    .business-main{background:linear-gradient(145deg,#151818,#0c0d0d);position:relative;overflow:hidden}
+    .storefront{position:absolute;right:7%;top:15%;width:42%;height:60%;border:1px solid rgba(255,255,255,.14);transform:perspective(800px) rotateY(-12deg);background:linear-gradient(120deg,rgba(255,255,255,.05),transparent)}
+    .storefront:before{content:"VC / STORE";position:absolute;left:12%;right:12%;top:12%;height:12px;border-bottom:1px solid rgba(255,255,255,.15);font-size:7px;color:#777}
+    .business-main h3{font-size:36px;font-weight:300;letter-spacing:-.05em;max-width:500px;margin:70px 0 12px}
+    .business-main p,.business-card p{font-size:11px;color:#858b89;line-height:1.7;max-width:500px}
+    .business-card h4{font-weight:400;font-size:22px;margin:15px 0 10px}
+    .business-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:25px}
+    .business-list span{font-size:9px;border:1px solid var(--line);padding:7px 9px;border-radius:999px;color:#a3a8a6}
+
+    /* CTA */
+    .cta{min-height:60vh;display:flex;align-items:center;justify-content:space-between;gap:30px}
+    .cta h2{font-size:clamp(3rem,8vw,8rem);font-weight:300;letter-spacing:-.065em;line-height:.86;margin:0}
+    .cta-side{max-width:300px;color:#858b89;font-size:12px;line-height:1.7}
+    footer{border-top:1px solid var(--line);padding:35px 6vw 45px;display:flex;justify-content:space-between;gap:20px;color:#727876;font-size:10px}
+    footer strong{color:#eee;font-weight:500}
+
+    /* ADMIN */
+    #adminView{min-height:100vh;background:#0b0c0c;color:#f5f5f2;padding:100px 4vw 50px}
+    .admin-shell{max-width:1250px;margin:auto}
+    .admin-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+    .admin-head h1{font-size:42px;margin:0;line-height:1}
+    .admin-head small{display:block;color:#777;font-size:10px;margin-top:7px}
+    .admin-layout{display:grid;grid-template-columns:220px 1fr;gap:10px}
+    .admin-side,.admin-content,.login-card{border:1px solid var(--line);background:#101212;border-radius:18px}
+    .admin-side{padding:10px;height:max-content}
+    .admin-side button{display:block;width:100%;text-align:left;border:0;background:transparent;color:#888;padding:12px;border-radius:10px;font-size:11px}
+    .admin-side button.active,.admin-side button:hover{background:#1a1d1d;color:#fff}
+    .admin-content{padding:25px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+    .stat{border:1px solid var(--line);padding:18px;border-radius:14px;background:#0d0f0f}
+    .stat b{font-size:27px;font-weight:300;display:block}.stat span{font-size:9px;color:#737976;text-transform:uppercase}
+    .admin-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+    .admin-title h2{font-size:24px;font-weight:400;letter-spacing:-.04em;margin:0}
+    .admin-table{width:100%;border-collapse:collapse}
+    .admin-table th,.admin-table td{text-align:left;padding:13px 8px;border-bottom:1px solid var(--line);font-size:10px}
+    .admin-table th{color:#777;font-weight:400;text-transform:uppercase;letter-spacing:.08em}
+    .admin-table td{color:#c7cbca}
+    .mini-status{font-size:9px;padding:5px 8px;border-radius:999px;border:1px solid var(--line)}
+    .on{color:#a8ffea;border-color:rgba(168,255,234,.3)}
+    .off{color:#888}
+    .admin-actions{display:flex;gap:5px}
+    .mini-btn{background:#191c1c;color:#ddd;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:9px}
+    .mini-btn:hover{background:#252929}
+    .mini-btn.danger{color:#ff9e9e}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
+    .field label{font-size:9px;color:#777;text-transform:uppercase;letter-spacing:.08em}
+    .field input,.field textarea,.field select{width:100%;border:1px solid var(--line);background:#0b0d0d;color:#eee;border-radius:10px;padding:12px;outline:none;font-size:11px}
+    .field textarea{min-height:130px;resize:vertical}
+    .field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(168,255,234,.4)}
+    .form-actions{display:flex;gap:8px;margin-top:18px}
+    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:25px}
+    .login-card{width:min(410px,100%);padding:30px}
+    .login-card h1{font-size:38px;margin:0 0 8px}.login-card p{color:#777;font-size:11px;line-height:1.6;margin-bottom:25px}
+    .login-error{color:#ff9e9e;font-size:10px;margin-top:10px}
+    .check{display:flex;align-items:center;gap:8px;font-size:10px;color:#888}
+    .check input{accent-color:#fff}
+
+    /* MOBILE */
+    @media(max-width:900px){
+      .navlinks{display:none}.menu-btn{display:block}
+      .service-grid,.project-grid{grid-template-columns:1fr 1fr}
+      .business-grid{grid-template-columns:1fr}
+      .cta{display:block;padding-top:90px;padding-bottom:90px}
+      .cta-side{margin-top:30px}
+      .hero-tags{display:none}
+      .admin-layout{grid-template-columns:1fr}
+      .admin-side{display:flex;overflow:auto}.admin-side button{white-space:nowrap;width:auto}
+    }
+    @media(max-width:600px){
+      .nav{top:10px;left:10px;right:10px;height:52px}
+      .brand{font-size:13px}.logo{transform:scale(.9)}
+      .hero{padding:125px 20px 45px;min-height:100svh}
+      .orb{width:80vw;height:80vw;top:39%}
+      .scan{width:100vw;top:39%}
+      h1{font-size:clamp(3rem,15vw,5rem)}
+      .hero-desc{font-size:12px}
+      section{padding:80px 20px}
+      .service-grid,.project-grid{grid-template-columns:1fr}
+      .service{min-height:290px}
+      .business-main{min-height:430px}
+      .storefront{width:75%;height:38%;top:6%;right:12%}
+      .business-main h3{font-size:31px;margin-top:220px}
+      .stats{grid-template-columns:1fr 1fr}
+      .form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
+      .admin-content{padding:16px;overflow:auto}
+      .admin-head{align-items:flex-start}
+      .admin-head h1{font-size:32px}
+      .admin-table{min-width:700px}
+      footer{display:block}footer div+div{margin-top:10px}
+    }
+  </style>
+</head>
+<body>
+
+  <div id="publicView">
+    <nav class="nav">
+      <a href="#home" class="brand"><span class="logo"><i></i><i></i></span>VC Studio</a>
+      <div class="navlinks">
+        <a href="#robotics">Robotics</a>
+        <a href="#web">Web</a>
+        <a href="#apps">Apps</a>
+        <a href="#games">Games</a>
+        <a href="#projects">Projects</a>
+        <a href="#business">Business</a>
+      </div>
+      <div>
+        <a href="#start" class="nav-cta">Start a Project <span class="wa-dot">↗</span></a>
+        <button class="menu-btn" onclick="toggleMobileMenu()">Menu</button>
+      </div>
+    </nav>
+
+    <div id="mobileMenu" class="hidden" style="position:fixed;z-index:90;inset:0;background:#090a0a;padding:100px 25px 30px;">
+      <div style="display:flex;flex-direction:column;gap:4px;font-size:38px;font-weight:300;letter-spacing:-.05em">
+        <a href="#home" onclick="closeMobileMenu()">Home</a>
+        <a href="#robotics" onclick="closeMobileMenu()">Robotics</a>
+        <a href="#web" onclick="closeMobileMenu()">Web</a>
+        <a href="#apps" onclick="closeMobileMenu()">Apps</a>
+        <a href="#games" onclick="closeMobileMenu()">Games</a>
+        <a href="#projects" onclick="closeMobileMenu()">Projects</a>
+        <a href="#business" onclick="closeMobileMenu()">Business</a>
+        <a href="#start" onclick="closeMobileMenu()">Start a Project</a>
+      </div>
+    </div>
+
+    <main>
+      <section class="hero" id="home" style="border-top:0">
+        <div class="hero-grid"></div>
+        <div class="orb"></div><div class="scan"></div>
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> VC STUDIO / IDEAS BUILT</div>
+          <h1>WE BUILD<br>WHAT YOU IMAGINE.</h1>
+          <p class="hero-desc">Robotics, websites, apps, games, school projects and digital solutions — designed, developed and built around your idea.</p>
+          <div class="actions">
+            <a class="btn primary" href="#start">START A PROJECT →</a>
+            <a class="btn" href="#projects">EXPLORE OUR WORK →</a>
+          </div>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">Robotics</span><span class="tag">Web</span><span class="tag">Apps</span><span class="tag">Games</span><span class="tag">Custom</span>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="section-kicker">01 / Capabilities</div>
+        <h2 class="section-title">WHAT CAN WE BUILD?</h2>
+        <p class="section-intro">One studio for physical technology, software and creative digital experiences.</p>
+        <div class="service-grid">
+          <article class="service"><div class="service-no">01 / ROBOTICS</div><div class="service-visual"><div class="cube"></div></div><h3>Robotics</h3><p>Arduino, Raspberry Pi, sensors, motors, automation, IoT and custom working robots.</p><a class="arrow" href="#robotics">↗</a></article>
+          <article class="service"><div class="service-no">02 / WEB</div><div class="service-visual"><div class="cube" style="border-radius:10px;transform:rotateX(55deg) rotateZ(-35deg) scaleX(1.3)"></div></div><h3>Web Development</h3><p>Business websites, portfolios, 2D and 3D experiences, landing pages and custom web apps.</p><a class="arrow" href="#web">↗</a></article>
+          <article class="service"><div class="service-no">03 / APPS</div><div class="service-visual"><div class="cube" style="border-radius:18px;transform:rotateY(35deg) rotateX(10deg)"></div></div><h3>App Development</h3><p>Android, web and custom applications built for ideas, businesses and school projects.</p><a class="arrow" href="#apps">↗</a></article>
+          <article class="service"><div class="service-no">04 / GAMES</div><div class="service-visual"><div class="cube" style="border-radius:50%;transform:rotateX(60deg) rotateZ(20deg)"></div></div><h3>Game Development</h3><p>2D, 3D, educational and school expo games with strong presentation and support.</p><a class="arrow" href="#games">↗</a></article>
+          <article class="service"><div class="service-no">05 / SCHOOL</div><div class="service-visual"><div class="cube" style="transform:rotateX(35deg) rotateY(35deg) rotateZ(20deg)"></div></div><h3>School Projects</h3><p>Working models, science exhibitions, electronics, robotics and complete project explanations.</p><a class="arrow" href="#projects">↗</a></article>
+          <article class="service"><div class="service-no">06 / BUSINESS</div><div class="service-visual"><div class="cube" style="transform:rotateX(45deg) rotateY(-25deg)"></div></div><h3>Business Solutions</h3><p>Modern websites and digital catalogues for dress shops, fancy stores and local businesses.</p><a class="arrow" href="#business">↗</a></article>
+        </div>
+      </section>
+
+      <section id="robotics">
+        <div class="section-kicker">02 / Robotics Lab</div>
+        <h2 class="section-title">MACHINES<br>THAT MOVE.</h2>
+        <p class="section-intro">From a first Arduino prototype to a custom Raspberry Pi system, we build practical working technology.</p>
+        <div class="project-grid" data-category="Robotics"></div>
+      </section>
+
+      <section id="web">
+        <div class="section-kicker">03 / Digital Systems</div>
+        <h2 class="section-title">WEBSITE<br>WITHOUT LIMITS.</h2>
+        <p class="section-intro">Business sites, creative portfolios, interactive 3D experiences and custom web applications.</p>
+        <div class="project-grid" data-category="Web"></div>
+      </section>
+
+      <section id="apps">
+        <div class="section-kicker">04 / Applications</div>
+        <h2 class="section-title">YOUR IDEA.<br>IN YOUR POCKET.</h2>
+        <p class="section-intro">Useful, polished applications for businesses, students and custom requirements.</p>
+        <div class="project-grid" data-category="Apps"></div>
+      </section>
+
+      <section id="games">
+        <div class="section-kicker">05 / Game Lab</div>
+        <h2 class="section-title">LET'S BUILD<br>A GAME.</h2>
+        <p class="section-intro">2D, 3D, educational and exhibition-ready games with room to grow.</p>
+        <div class="project-grid" data-category="Games"></div>
+      </section>
+
+      <section id="projects">
+        <div class="section-kicker">06 / Selected Work</div>
+        <h2 class="section-title">PROJECTS.</h2>
+        <div class="project-toolbar"><div class="filters">
+          <button class="filter active" data-filter="All">All</button><button class="filter" data-filter="Robotics">Robotics</button><button class="filter" data-filter="Web">Web</button><button class="filter" data-filter="Apps">Apps</button><button class="filter" data-filter="Games">Games</button><button class="filter" data-filter="School">School</button>
+        </div></div>
+        <div class="project-grid" id="allProjects"></div>
+      </section>
+
+      <section id="business">
+        <div class="section-kicker">07 / For Businesses</div>
+        <h2 class="section-title">YOUR BUSINESS<br>DESERVES DIGITAL.</h2>
+        <div class="business-grid">
+          <div class="business-main">
+            <div class="storefront"></div>
+            <div class="eyebrow"><span></span> LOCAL BUSINESS SOLUTIONS</div>
+            <h3>Turn your store into a digital experience.</h3>
+            <p>Websites and product showcases designed for dress shops, fancy stores, boutiques, restaurants and local businesses.</p>
+            <a href="#start" class="btn primary" style="display:inline-block;margin-top:18px">BUILD MY BUSINESS WEBSITE →</a>
+          </div>
+          <div class="business-card">
+            <div class="section-kicker">Tailored solutions</div>
+            <h4>Built around your business.</h4>
+            <p>Show products, offers, locations, galleries and WhatsApp enquiries in one clean digital presence.</p>
+            <div class="business-list"><span>Dress Shops</span><span>Fancy Stores</span><span>Boutiques</span><span>Restaurants</span><span>Local Stores</span><span>Custom</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="start" class="cta">
+        <div><div class="section-kicker">08 / Start</div><h2>HAVE AN IDEA?<br>LET'S BUILD IT.</h2></div>
+        <div class="cta-side">
+          <p>Tell us what you want to build. For direct enquiries, use WhatsApp.</p>
+          <a class="btn primary" href="https://wa.me/919342354428" target="_blank" rel="noopener">CHAT ON WHATSAPP →</a>
+          <button class="btn" onclick="openProjectModal()">START WITH ₹50 →</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>VC Studio</strong><br>Ideas. Built.</div>
+      <div>Robotics · Web · Apps · Games · School · Business</div>
+      <div>WhatsApp <strong>9342354428</strong> · <a href="#admin" style="color:#aaa">Admin</a></div>
+    </footer>
+  </div>
+
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" class="hidden" style="position:fixed;z-index:200;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(14px);padding:20px;overflow:auto">
+    <div class="login-card" style="margin:5vh auto;max-width:650px">
+      <div class="admin-title"><h2>Start a Project</h2><button class="mini-btn" onclick="closeProjectModal()">Close</button></div>
+      <p style="font-size:11px;color:#777;line-height:1.6">Project consultation / booking starts at ₹50. This demo stores your enquiry locally; connect Supabase/payment verification before production.</p>
+      <form id="enquiryForm" onsubmit="submitEnquiry(event)">
+        <div class="form-grid">
+          <div class="field"><label>Name</label><input name="name" required></div>
+          <div class="field"><label>WhatsApp Number</label><input name="phone" required></div>
+          <div class="field"><label>Category</label><select name="category"><option>Robotics</option><option>Web</option><option>Apps</option><option>Games</option><option>School</option><option>Business</option><option>Other</option></select></div>
+          <div class="field"><label>Budget</label><input name="budget" placeholder="Optional"></div>
+          <div class="field full"><label>Describe your idea</label><textarea name="description" required></textarea></div>
+        </div>
+        <div style="margin-top:18px;padding:18px;border:1px dashed var(--line);border-radius:14px;text-align:center">
+          <div style="font-size:10px;color:#777;text-transform:uppercase">Booking / Consultation</div>
+          <div style="font-size:34px;font-weight:300;margin:5px">₹50</div>
+          <div style="font-size:10px;color:#777">Replace this area with your real UPI QR in production.</div>
+          <div style="margin:15px auto;width:130px;height:130px;border:1px solid #444;display:flex;align-items:center;justify-content:center;color:#777;font-size:9px">YOUR QR</div>
+        </div>
+        <div class="form-actions"><button class="btn primary" type="submit">SUBMIT ENQUIRY →</button><button class="btn" type="button" onclick="closeProjectModal()">Cancel</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN VIEW -->
+  <div id="adminView" class="hidden">
+    <div id="adminLogin" class="login-wrap">
+      <div class="login-card">
+        <div class="eyebrow"><span></span> VC STUDIO / PRIVATE</div>
+        <h1>ADMIN.</h1>
+        <p>Manage projects, descriptions, status and visibility. This single-file version uses local browser storage. Use Supabase authentication/database before publishing as a real private CMS.</p>
+        <form onsubmit="adminLogin(event)">
+          <div class="field" style="margin-bottom:12px"><label>Username</label><input id="adminUser" value="admin" required></div>
+          <div class="field"><label>Password</label><input id="adminPass" type="password" placeholder="admin123" required></div>
+          <div id="loginError" class="login-error hidden">Incorrect login.</div>
+          <button class="btn primary" style="width:100%;margin-top:18px" type="submit">LOGIN →</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="dashboard" class="hidden">
+      <div class="admin-shell">
+        <div class="admin-head">
+          <div><h1>VC STUDIO / ADMIN</h1><small>Content management dashboard</small></div>
+          <div style="display:flex;gap:7px"><a class="btn" href="#home" onclick="showPublic()">View Site</a><button class="btn" onclick="adminLogout()">Logout</button></div>
+        </div>
+        <div class="admin-layout">
+          <aside class="admin-side">
+            <button class="active" data-tab="projectsTab" onclick="adminTab('projectsTab',this)">Projects</button>
+            <button data-tab="addTab" onclick="adminTab('addTab',this)">+ Add Project</button>
+            <button data-tab="settingsTab" onclick="adminTab('settingsTab',this)">Settings</button>
+            <button data-tab="enquiriesTab" onclick="adminTab('enquiriesTab',this)">Enquiries</button>
+          </aside>
+          <section class="admin-content">
+            <div id="projectsTab" class="admin-tab">
+              <div class="stats"><div class="stat"><b id="statAll">0</b><span>Total Projects</span></div><div class="stat"><b id="statPublished">0</b><span>Published</span></div><div class="stat"><b id="statHidden">0</b><span>Hidden</span></div><div class="stat"><b id="statEnquiries">0</b><span>Enquiries</span></div></div>
+              <div class="admin-title"><h2>Projects</h2><button class="btn primary" onclick="adminTab('addTab',document.querySelector('[data-tab=addTab]'))">+ ADD PROJECT</button></div>
+              <div style="overflow:auto"><table class="admin-table"><thead><tr><th>Project</th><th>Category</th><th>Status</th><th>Published</th><th>Actions</th></tr></thead><tbody id="adminProjects"></tbody></table></div>
+            </div>
+
+            <div id="addTab" class="admin-tab hidden">
+              <div class="admin-title"><h2 id="formTitle">Add Project</h2><button class="btn" onclick="resetProjectForm()">Reset</button></div>
+              <form id="projectForm" onsubmit="saveProject(event)">
+                <input type="hidden" id="editId">
+                <div class="form-grid">
+                  <div class="field"><label>Project Name</label><input id="pName" required></div>
+                  <div class="field"><label>Category</label><select id="pCategory"><option>Robotics</option><option>Web</option><option>Apps</option><option>Games</option><option>School</option><option>Business</option></select></div>
+                  <div class="field"><label>Price</label><input id="pPrice" placeholder="Contact for price"></div>
+                  <div class="field"><label>Status</label><select id="pStatus"><option>Available</option><option>Coming Soon</option><option>Unavailable</option></select></div>
+                  <div class="field full"><label>Short Description</label><input id="pShort" required></div>
+                  <div class="field full"><label>Full Description</label><textarea id="pDesc" required></textarea></div>
+                  <div class="field"><label>Technologies / Components</label><input id="pTech" placeholder="Arduino, Python, sensors..."></div>
+                  <div class="field"><label>Demo URL</label><input id="pDemo" placeholder="https://..."></div>
+                  <div class="field full"><label>Image URL (optional)</label><input id="pImage" placeholder="https://..."></div>
+                  <div class="field full"><label>Visibility</label><label class="check"><input type="checkbox" id="pPublished" checked> Published on public website</label></div>
+                </div>
+                <div class="form-actions"><button class="btn primary" type="submit">SAVE PROJECT →</button><button class="btn" type="button" onclick="adminTab('projectsTab',document.querySelector('[data-tab=projectsTab]'))">Cancel</button></div>
+              </form>
+            </div>
+
+            <div id="settingsTab" class="admin-tab hidden">
+              <div class="admin-title"><h2>Settings</h2></div>
+              <div class="form-grid">
+                <div class="field"><label>WhatsApp</label><input id="settingsPhone" value="9342354428"></div>
+                <div class="field"><label>Booking Amount</label><input id="settingsAmount" value="50"></div>
+                <div class="field full"><label>Hero Heading</label><input id="settingsHero" value="WE BUILD WHAT YOU IMAGINE."></div>
+                <div class="field full"><label>UPI QR Image URL</label><input id="settingsQR" placeholder="Upload to storage later and paste URL"></div>
+              </div>
+              <div class="form-actions"><button class="btn primary" onclick="saveSettings()">SAVE SETTINGS →</button></div>
+            </div>
+
+            <div id="enquiriesTab" class="admin-tab hidden">
+              <div class="admin-title"><h2>Customer Enquiries</h2></div>
+              <div style="overflow:auto"><table class="admin-table"><thead><tr><th>Name</th><th>WhatsApp</th><th>Category</th><th>Idea</th><th>Date</th></tr></thead><tbody id="adminEnquiries"></tbody></table></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const defaultProjects = [
+    {id:1,name:"Obstacle Avoiding Robot",category:"Robotics",short:"Autonomous Arduino robot with ultrasonic obstacle detection.",desc:"A working robotic prototype that detects obstacles and automatically changes direction using an ultrasonic sensor.",tech:"Arduino, Ultrasonic Sensor, Motors",price:"Starting from ₹1,500",status:"Available",published:true,image:""},
+    {id:2,name:"Smart Store Website",category:"Web",short:"Modern digital storefront for a local business.",desc:"A responsive business website with product presentation, offers, location and WhatsApp enquiries.",tech:"HTML, CSS, JavaScript",price:"Custom quote",status:"Available",published:true,image:""},
+    {id:3,name:"School Utility App",category:"Apps",short:"Simple custom application for a school project.",desc:"A clean utility app designed around a school requirement with room for custom features.",tech:"App Development",price:"Custom quote",status:"Available",published:true,image:""},
+    {id:4,name:"Expo 3D Game",category:"Games",short:"Interactive game designed for a school exhibition.",desc:"A presentation-ready game concept with engaging interaction and a clear exhibition flow.",tech:"Game Development",price:"Custom quote",status:"Available",published:true,image:""},
+    {id:5,name:"Smart Automation Model",category:"School",short:"Working automation model for science exhibition.",desc:"A practical school exhibition project combining sensors, electronics and automation.",tech:"Arduino, Sensors, Servo",price:"Custom quote",status:"Coming Soon",published:true,image:""},
+    {id:6,name:"Raspberry Pi Vision",category:"Robotics",short:"Camera-based Raspberry Pi prototype.",desc:"A Raspberry Pi concept using a camera and Python for a custom computer-vision workflow.",tech:"Raspberry Pi, Python, Camera",price:"Custom quote",status:"Unavailable",published:false,image:""}
+  ];
+
+  const getProjects = () => JSON.parse(localStorage.getItem("vc_projects") || JSON.stringify(defaultProjects));
+  const setProjects = p => localStorage.setItem("vc_projects", JSON.stringify(p));
+  const getSettings = () => JSON.parse(localStorage.getItem("vc_settings") || '{"phone":"9342354428","amount":"50","hero":"WE BUILD WHAT YOU IMAGINE.","qr":""}');
+  const setSettings = s => localStorage.setItem("vc_settings", JSON.stringify(s));
+  const getEnquiries = () => JSON.parse(localStorage.getItem("vc_enquiries") || "[]");
+
+  function projectCard(p){
+    return `<article class="project">
+      <div class="project-img">${p.image ? `<img src="${escapeHtml(p.image)}" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.78">` : `<div class="project-shape"></div>`}</div>
+      <div class="project-body">
+        <div class="project-meta"><span>${escapeHtml(p.category)}</span><span class="status">${escapeHtml(p.status)}</span></div>
+        <h3>${escapeHtml(p.name)}</h3>
+        <p>${escapeHtml(p.short)}</p>
+        <div class="project-foot"><span>${escapeHtml(p.price || "Custom quote")}</span>${p.demo ? `<a href="${escapeHtml(p.demo)}" target="_blank">LIVE DEMO ↗</a>` : `<span>VIEW PROJECT ↗</span>`}</div>
+      </div>
+    </article>`;
+  }
+  function escapeHtml(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+  function renderProjects(){
+    const projects=getProjects().filter(p=>p.published);
+    document.querySelectorAll("[data-category]").forEach(el=>{
+      const cat=el.dataset.category;
+      el.innerHTML=projects.filter(p=>p.category===cat).slice(0,3).map(projectCard).join("") || `<div style="grid-column:1/-1;color:#777;font-size:11px;padding:30px 0">Projects will appear here.</div>`;
+    });
+    renderAll("All");
+  }
+  function renderAll(filter="All"){
+    const projects=getProjects().filter(p=>p.published && (filter==="All"||p.category===filter));
+    document.getElementById("allProjects").innerHTML=projects.map(projectCard).join("") || `<div style="grid-column:1/-1;color:#777;font-size:11px;padding:30px 0">No published projects in this category.</div>`;
+  }
+  document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));btn.classList.add("active");renderAll(btn.dataset.filter)}));
+
+  function showAdmin(){
+    document.getElementById("publicView").classList.add("hidden");
+    document.getElementById("adminView").classList.remove("hidden");
+    document.getElementById("mobileMenu").classList.add("hidden");
+    if(localStorage.getItem("vc_admin")==="1"){document.getElementById("adminLogin").classList.add("hidden");document.getElementById("dashboard").classList.remove("hidden");renderAdmin();}
+  }
+  function showPublic(){location.hash="home";document.getElementById("adminView").classList.add("hidden");document.getElementById("publicView").classList.remove("hidden");renderProjects()}
+  function adminLogin(e){e.preventDefault();if(document.getElementById("adminUser").value==="admin" && document.getElementById("adminPass").value==="admin123"){localStorage.setItem("vc_admin","1");document.getElementById("adminLogin").classList.add("hidden");document.getElementById("dashboard").classList.remove("hidden");renderAdmin()}else document.getElementById("loginError").classList.remove("hidden")}
+  function adminLogout(){localStorage.removeItem("vc_admin");location.hash="admin";location.reload()}
+  function adminTab(id,btn){document.querySelectorAll(".admin-tab").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".admin-side button").forEach(x=>x.classList.remove("active"));if(btn)btn.classList.add("active");if(id==="projectsTab")renderAdmin()}
+  function renderAdmin(){
+    const p=getProjects(), e=getEnquiries();
+    document.getElementById("statAll").textContent=p.length;document.getElementById("statPublished").textContent=p.filter(x=>x.published).length;document.getElementById("statHidden").textContent=p.filter(x=>!x.published).length;document.getElementById("statEnquiries").textContent=e.length;
+    document.getElementById("adminProjects").innerHTML=p.map(x=>`<tr>
+      <td><strong>${escapeHtml(x.name)}</strong><br><span style="color:#666">${escapeHtml(x.short)}</span></td>
+      <td>${escapeHtml(x.category)}</td><td>${escapeHtml(x.status)}</td>
+      <td><span class="mini-status ${x.published?'on':'off'}">${x.published?'PUBLISHED':'HIDDEN'}</span></td>
+      <td><div class="admin-actions"><button class="mini-btn" onclick="editProject(${x.id})">Edit</button><button class="mini-btn" onclick="toggleProject(${x.id})">${x.published?'Hide':'Publish'}</button><button class="mini-btn danger" onclick="deleteProject(${x.id})">Delete</button></div></td>
+    </tr>`).join("");
+    document.getElementById("adminEnquiries").innerHTML=e.map(x=>`<tr><td>${escapeHtml(x.name)}</td><td>${escapeHtml(x.phone)}</td><td>${escapeHtml(x.category)}</td><td>${escapeHtml(x.description)}</td><td>${escapeHtml(x.date)}</td></tr>`).join("") || `<tr><td colspan="5" style="color:#666">No enquiries yet.</td></tr>`;
+  }
+  function resetProjectForm(){
+    document.getElementById("projectForm").reset();document.getElementById("editId").value="";document.getElementById("pPublished").checked=true;document.getElementById("formTitle").textContent="Add Project";
+  }
+  function editProject(id){
+    const p=getProjects().find(x=>x.id===id);if(!p)return;
+    document.getElementById("editId").value=p.id;document.getElementById("pName").value=p.name;document.getElementById("pCategory").value=p.category;document.getElementById("pPrice").value=p.price||"";document.getElementById("pStatus").value=p.status;document.getElementById("pShort").value=p.short;document.getElementById("pDesc").value=p.desc;document.getElementById("pTech").value=p.tech||"";document.getElementById("pDemo").value=p.demo||"";document.getElementById("pImage").value=p.image||"";document.getElementById("pPublished").checked=!!p.published;document.getElementById("formTitle").textContent="Edit Project";adminTab("addTab",document.querySelector('[data-tab=addTab]'));window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function saveProject(e){
+    e.preventDefault();let p=getProjects(), id=document.getElementById("editId").value;
+    const obj={id:id?Number(id):Date.now(),name:document.getElementById("pName").value,category:document.getElementById("pCategory").value,price:document.getElementById("pPrice").value, status:document.getElementById("pStatus").value,short:document.getElementById("pShort").value,desc:document.getElementById("pDesc").value,tech:document.getElementById("pTech").value,demo:document.getElementById("pDemo").value,image:document.getElementById("pImage").value,published:document.getElementById("pPublished").checked};
+    const idx=p.findIndex(x=>x.id===obj.id);if(idx>=0)p[idx]=obj;else p.unshift(obj);setProjects(p);resetProjectForm();renderAdmin();renderProjects();adminTab("projectsTab",document.querySelector('[data-tab=projectsTab]'));alert("Project saved.");
+  }
+  function toggleProject(id){let p=getProjects();const x=p.find(x=>x.id===id);x.published=!x.published;setProjects(p);renderAdmin();renderProjects()}
+  function deleteProject(id){if(confirm("Delete this project permanently?")){setProjects(getProjects().filter(x=>x.id!==id));renderAdmin();renderProjects()}}
+  function saveSettings(){setSettings({phone:document.getElementById("settingsPhone").value,amount:document.getElementById("settingsAmount").value,hero:document.getElementById("settingsHero").value,qr:document.getElementById("settingsQR").value});alert("Settings saved.");}
+  function submitEnquiry(e){e.preventDefault();const f=new FormData(e.target);const arr=getEnquiries();arr.unshift({name:f.get("name"),phone:f.get("phone"),category:f.get("category"),budget:f.get("budget"),description:f.get("description"),date:new Date().toLocaleString()});localStorage.setItem("vc_enquiries",JSON.stringify(arr));closeProjectModal();alert("Enquiry saved. In production, connect this to Supabase and WhatsApp.");e.target.reset()}
+  function openProjectModal(){document.getElementById("projectModal").classList.remove("hidden")}
+  function closeProjectModal(){document.getElementById("projectModal").classList.add("hidden")}
+  function toggleMobileMenu(){document.getElementById("mobileMenu").classList.toggle("hidden")}
+  function closeMobileMenu(){document.getElementById("mobileMenu").classList.add("hidden")}
+  function route(){
+    if(location.hash==="#admin"){showAdmin()}else{document.getElementById("adminView").classList.add("hidden");document.getElementById("publicView").classList.remove("hidden");renderProjects()}
+  }
+  window.addEventListener("hashchange",route);
+  route();
+</script>
+</body>
+</html>
